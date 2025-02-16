@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: currency-fetcher
+server:
+  port: 8080
+  shutdown: graceful
