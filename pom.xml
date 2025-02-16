@@ -8,15 +8,19 @@
         <version>3.4.2</version>
         <relativePath/>
     </parent>
+
     <groupId>com.pdp</groupId>
     <artifactId>currency-fetcher</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>currency-fetcher</name>
     <description>Currency and rates fetcher</description>
+
     <properties>
         <java.version>21</java.version>
         <spring-cloud.version>2024.0.0</spring-cloud.version>
+        <preliquibase.version>1.6.0</preliquibase.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -37,6 +41,11 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.lbruun.springboot</groupId>
+            <artifactId>preliquibase-spring-boot-starter</artifactId>
+            <version>${preliquibase.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
