@@ -1,9 +1,10 @@
 package com.pdp.currencyfetcher.usecase;
 
 import com.pdp.currencyfetcher.domain.Rate;
+import java.util.List;
 
 public interface SaveCurrencyUseCase {
 
-  Rate save(Rate rate);
+  List<Rate> save(List<Rate> rates);
 
 }
