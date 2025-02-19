@@ -1,4 +1,4 @@
-package com.pdp.currencyfetcher.usecase;
+package com.pdp.currencyfetcher.usecase.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

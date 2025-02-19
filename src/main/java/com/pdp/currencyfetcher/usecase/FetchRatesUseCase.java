@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pdp.currencyfetcher.domain.Rate;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,12 @@ import org.mapstruct.Mapping;
 
 public interface FetchRatesUseCase {
 
-  CompletableFuture<List<RateData>> fetch();
+  /**
+   * Fetches currencies and rates using an appropriate API.
+   *
+   * @return List of currencies and rates
+   */
+  List<RateData> fetch();
 
   @Data
   @NoArgsConstructor
@@ -30,7 +34,7 @@ public interface FetchRatesUseCase {
 
     @Mapping(target = "currency", source = "symbol")
     @Mapping(target = "rate", source = "price")
-    Rate map(RateData data);
+    List<Rate> toEntity(List<RateData> data);
   }
 
 }
