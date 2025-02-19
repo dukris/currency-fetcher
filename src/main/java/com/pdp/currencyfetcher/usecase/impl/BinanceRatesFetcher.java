@@ -1,5 +1,6 @@
-package com.pdp.currencyfetcher.usecase;
+package com.pdp.currencyfetcher.usecase.impl;
 
+import com.pdp.currencyfetcher.usecase.FetchRatesUseCase;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;

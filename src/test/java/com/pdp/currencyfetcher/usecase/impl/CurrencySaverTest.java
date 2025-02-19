@@ -1,4 +1,4 @@
-package com.pdp.currencyfetcher.usecase;
+package com.pdp.currencyfetcher.usecase.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -10,6 +10,7 @@ import com.pdp.currencyfetcher.domain.Rate;
 import com.pdp.currencyfetcher.repository.RateRepository;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,16 +30,17 @@ class CurrencySaverTest {
   @Test
   void shouldSaveCurrenciesAndRates() {
     // given
-    Rate expected = new Rate(UUID.randomUUID(), "USDT", new BigDecimal(1), LocalDateTime.now());
-    when(repository.save(any())).thenReturn(expected);
+    List<Rate> expected = List.of(new Rate(UUID.randomUUID(), "USDT", new BigDecimal(1), LocalDateTime.now()));
+    when(repository.saveAll(any())).thenReturn(expected);
 
     // when
-    Rate actual = saver.save(expected);
+    List<Rate> actual = saver.save(expected);
 
     // then
     assertNotNull(actual);
+    assertEquals(expected.size(), actual.size());
     assertEquals(expected, actual);
-    verify(repository).save(any());
+    verify(repository).saveAll(any());
   }
 
 }
