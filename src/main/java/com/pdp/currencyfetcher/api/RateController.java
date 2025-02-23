@@ -60,8 +60,10 @@ public class RateController {
                     );
                 }
             } catch (Exception ex) {
-                ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Internal server error");
+                result.setErrorResult(
+                    ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("Internal server error")
+                );
                 log.warn("Error while fetching rates", ex);
             }
         });
