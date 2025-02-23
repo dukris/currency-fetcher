@@ -3,7 +3,7 @@ package com.pdp.currencyfetcher.usecase.impl;
 import com.pdp.currencyfetcher.domain.Rate;
 import com.pdp.currencyfetcher.repository.RateRepository;
 import com.pdp.currencyfetcher.usecase.GenerateVersionUseCase;
-import com.pdp.currencyfetcher.usecase.RetrieveCurrencyUseCase;
+import com.pdp.currencyfetcher.usecase.RetrieveCurrenciesUseCase;
 import com.pdp.currencyfetcher.usecase.SaveCurrencyUseCase;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
-public class PostgresCurrencyHandler implements SaveCurrencyUseCase, RetrieveCurrencyUseCase {
+public class PostgresCurrenciesHandler implements SaveCurrencyUseCase, RetrieveCurrenciesUseCase {
 
     private final RateRepository repository;
     private final GenerateVersionUseCase generator;

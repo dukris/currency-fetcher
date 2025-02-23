@@ -25,7 +25,7 @@ class PostgresCurrencyHandlerTest {
   private RateRepository repository;
 
   @InjectMocks
-  private PostgresCurrencyHandler saver;
+  private PostgresCurrenciesHandler saver;
 
   @Test
   void shouldSaveCurrenciesAndRates() {

@@ -3,7 +3,7 @@ package com.pdp.currencyfetcher.usecase;
 import com.pdp.currencyfetcher.domain.Rate;
 import java.util.List;
 
-public interface RetrieveCurrencyUseCase {
+public interface RetrieveCurrenciesUseCase {
 
     /**
      * Retrieves provided currencies and rates from the database
