@@ -19,13 +19,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class CurrencySaverTest {
+class PostgresCurrencyHandlerTest {
 
   @Mock
   private RateRepository repository;
 
   @InjectMocks
-  private CurrencySaver saver;
+  private PostgresCurrencyHandler saver;
 
   @Test
   void shouldSaveCurrenciesAndRates() {

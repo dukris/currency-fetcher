@@ -1,5 +1,6 @@
 package com.pdp.currencyfetcher.usecase.impl;
 
+import com.pdp.currencyfetcher.mapper.RateMapper;
 import com.pdp.currencyfetcher.usecase.FetchRatesUseCase;
 import com.pdp.currencyfetcher.usecase.FetchRatesUseCase.RateData;
 import com.pdp.currencyfetcher.usecase.SaveCurrencyUseCase;
@@ -13,14 +14,14 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class FetchingScheduler implements ScheduleFetchingUseCase {
 
-  private final FetchRatesUseCase fetcher;
-  private final SaveCurrencyUseCase saver;
-  private final FetchRatesUseCase.RateDataMapper mapper;
+    private final FetchRatesUseCase fetcher;
+    private final SaveCurrencyUseCase saver;
+    private final RateMapper mapper;
 
-  @Override
-  @Scheduled(fixedDelay = 1000000000)
-  public void schedule() {
-    List<RateData> rates = fetcher.fetch();
-    saver.save(mapper.toEntity(rates));
-  }
+    @Override
+    @Scheduled(fixedDelay = 1000000000)
+    public void schedule() {
+        List<RateData> rates = fetcher.fetch();
+        saver.save(mapper.toEntity(rates));
+    }
 }
