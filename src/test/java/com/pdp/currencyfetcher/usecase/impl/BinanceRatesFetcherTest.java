@@ -7,8 +7,8 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.pdp.currencyfetcher.extensions.FakeRateData;
 import com.pdp.currencyfetcher.usecase.FetchRatesUseCase.RateData;
-import java.math.BigDecimal;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,14 +22,13 @@ class BinanceRatesFetcherTest {
 
   @Mock
   private RestTemplate template;
-
   @InjectMocks
   private BinanceRatesFetcher fetcher;
 
   @Test
-  void shouldFetchRates() {
+  @ExtendWith(FakeRateData.class)
+  void shouldFetchRates(RateData expected) {
     // given
-    RateData expected = new RateData("USDT", new BigDecimal(1));
     when(template.getForObject(anyString(), any())).thenReturn(new RateData[]{expected});
 
     // when

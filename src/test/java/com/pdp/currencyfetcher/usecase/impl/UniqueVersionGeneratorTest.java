@@ -15,8 +15,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @ExtendWith(MockitoExtension.class)
 class UniqueVersionGeneratorTest {
 
-  private final Long expected = 1L;
-
   @Mock
   private JdbcTemplate template;
   @InjectMocks
@@ -25,6 +23,7 @@ class UniqueVersionGeneratorTest {
   @Test
   void shouldGenerateUniqueVersion() {
     // given
+    Long expected = 1L;
     when(template.queryForObject("SELECT nextval('version_no_seq')", Long.class)).thenReturn(expected);
 
     // when
@@ -39,6 +38,7 @@ class UniqueVersionGeneratorTest {
   @Test
   void shouldReturnCurrentVersion() {
     // given
+    Long expected = 1L;
     when(template.queryForObject("SELECT currval('version_no_seq')", Long.class)).thenReturn(expected);
 
     // when

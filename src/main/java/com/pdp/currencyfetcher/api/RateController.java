@@ -1,7 +1,7 @@
 package com.pdp.currencyfetcher.api;
 
 import com.pdp.currencyfetcher.api.dto.PollingRequestDto;
-import com.pdp.currencyfetcher.usecase.PollUpdatedCurrenciesUseCase;
+import com.pdp.currencyfetcher.usecase.PollUpdatedResponseUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.concurrent.CompletableFuture;
@@ -23,7 +23,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 @Tag(name = "Controller for rates")
 public class RateController {
 
-  private final PollUpdatedCurrenciesUseCase fetcher;
+  private final PollUpdatedResponseUseCase fetcher;
   private final ExecutorService executor;
 
   @GetMapping

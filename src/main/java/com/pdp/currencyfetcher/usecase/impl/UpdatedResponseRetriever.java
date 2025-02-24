@@ -2,7 +2,7 @@ package com.pdp.currencyfetcher.usecase.impl;
 
 import com.pdp.currencyfetcher.api.dto.PollingResponseDto;
 import com.pdp.currencyfetcher.mapper.RateMapper;
-import com.pdp.currencyfetcher.usecase.PollUpdatedCurrenciesUseCase;
+import com.pdp.currencyfetcher.usecase.PollUpdatedResponseUseCase;
 import com.pdp.currencyfetcher.usecase.GenerateVersionUseCase;
 import com.pdp.currencyfetcher.usecase.RetrieveCurrenciesUseCase;
 import java.util.concurrent.TimeUnit;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class PollingCurrencyFetcher implements PollUpdatedCurrenciesUseCase {
+public class UpdatedResponseRetriever implements PollUpdatedResponseUseCase {
 
   private final RetrieveCurrenciesUseCase retriever;
   private final GenerateVersionUseCase generator;
@@ -24,7 +24,7 @@ public class PollingCurrencyFetcher implements PollUpdatedCurrenciesUseCase {
     if (version < generator.current()) {
       return ResponseEntity.ok(
           PollingResponseDto.builder()
-              .version(generator.current())
+              .version(generator.next())
               .rates(mapper.toDto(retriever.getAll()))
               .build()
       );
@@ -35,7 +35,7 @@ public class PollingCurrencyFetcher implements PollUpdatedCurrenciesUseCase {
         if (version < generator.current()) {
           return ResponseEntity.ok(
               PollingResponseDto.builder()
-                  .version(generator.current())
+                  .version(generator.next())
                   .rates(mapper.toDto(retriever.getAll()))
                   .build()
           );

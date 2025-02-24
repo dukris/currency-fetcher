@@ -2,7 +2,7 @@ package com.pdp.currencyfetcher.usecase;
 
 import org.springframework.http.ResponseEntity;
 
-public interface PollUpdatedCurrenciesUseCase {
+public interface PollUpdatedResponseUseCase {
 
   /**
    * Fetches currencies and rates using an appropriate API.
