@@ -7,9 +7,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.pdp.currencyfetcher.domain.Rate;
+import com.pdp.currencyfetcher.mapper.RateMapper;
 import com.pdp.currencyfetcher.usecase.FetchRatesUseCase;
 import com.pdp.currencyfetcher.usecase.FetchRatesUseCase.RateData;
-import com.pdp.currencyfetcher.usecase.FetchRatesUseCase.RateDataMapper;
 import com.pdp.currencyfetcher.usecase.SaveCurrencyUseCase;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -31,7 +31,7 @@ class FetchingSchedulerTest {
   @Mock
   private SaveCurrencyUseCase saver;
   @Mock
-  private RateDataMapper mapper;
+  private RateMapper mapper;
   @Captor
   private ArgumentCaptor<List<Rate>> captor;
   @InjectMocks
