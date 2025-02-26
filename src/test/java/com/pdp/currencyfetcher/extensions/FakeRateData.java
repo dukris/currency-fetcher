@@ -1,6 +1,6 @@
 package com.pdp.currencyfetcher.extensions;
 
-import com.pdp.currencyfetcher.usecase.FetchRatesUseCase.RateData;
+import com.pdp.currencyfetcher.gateway.BinanceGateway.RateData;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;

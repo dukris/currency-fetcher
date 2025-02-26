@@ -1,9 +1,16 @@
-package com.pdp.currencyfetcher.usecase;
+package com.pdp.currencyfetcher.adapter;
 
 import com.pdp.currencyfetcher.domain.Rate;
 import java.util.List;
 
-public interface SaveCurrencyUseCase {
+public interface RatePersistenceAdapter {
+
+  /**
+   * Retrieves provided currencies and rates from the database.
+   *
+   * @return List of currencies and rates
+   */
+  List<Rate> findAll();
 
   /**
    * Stores provided currencies and rates.

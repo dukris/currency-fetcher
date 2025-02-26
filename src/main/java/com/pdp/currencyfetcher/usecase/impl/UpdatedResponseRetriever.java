@@ -1,10 +1,10 @@
 package com.pdp.currencyfetcher.usecase.impl;
 
+import com.pdp.currencyfetcher.adapter.RatePersistenceAdapter;
+import com.pdp.currencyfetcher.adapter.VersionPersistenceAdapter;
 import com.pdp.currencyfetcher.api.dto.PollingResponseDto;
 import com.pdp.currencyfetcher.mapper.RateMapper;
 import com.pdp.currencyfetcher.usecase.PollUpdatedResponseUseCase;
-import com.pdp.currencyfetcher.usecase.GenerateVersionUseCase;
-import com.pdp.currencyfetcher.usecase.RetrieveCurrenciesUseCase;
 import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,28 +15,28 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UpdatedResponseRetriever implements PollUpdatedResponseUseCase {
 
-  private final RetrieveCurrenciesUseCase retriever;
-  private final GenerateVersionUseCase generator;
+  private final RatePersistenceAdapter ratePersistenceAdapter;
+  private final VersionPersistenceAdapter versionPersistenceAdapter;
   private final RateMapper mapper;
 
   @Override
   public ResponseEntity fetch(Long version, Long timeout) throws InterruptedException {
-    if (version < generator.current()) {
+    if (version < versionPersistenceAdapter.current()) {
       return ResponseEntity.ok(
           PollingResponseDto.builder()
-              .version(generator.next())
-              .rates(mapper.toDto(retriever.getAll()))
+              .version(versionPersistenceAdapter.next())
+              .rates(mapper.toDto(ratePersistenceAdapter.findAll()))
               .build()
       );
     } else {
       long start = System.currentTimeMillis();
       while (System.currentTimeMillis() - start < timeout * 1000) {
         TimeUnit.MILLISECONDS.sleep(500);
-        if (version < generator.current()) {
+        if (version < versionPersistenceAdapter.current()) {
           return ResponseEntity.ok(
               PollingResponseDto.builder()
-                  .version(generator.next())
-                  .rates(mapper.toDto(retriever.getAll()))
+                  .version(versionPersistenceAdapter.next())
+                  .rates(mapper.toDto(ratePersistenceAdapter.findAll()))
                   .build()
           );
         }

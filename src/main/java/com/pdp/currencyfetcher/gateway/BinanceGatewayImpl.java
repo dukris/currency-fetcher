@@ -1,6 +1,5 @@
-package com.pdp.currencyfetcher.usecase.impl;
+package com.pdp.currencyfetcher.gateway;
 
-import com.pdp.currencyfetcher.usecase.FetchRatesUseCase;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -10,13 +9,13 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 @RequiredArgsConstructor
-public class BinanceRatesFetcher implements FetchRatesUseCase {
+public class BinanceGatewayImpl implements BinanceGateway {
 
   private final RestTemplate template;
   private static final String BINANCE_API_URL = "https://api.binance.com/api/v3/ticker/price";
 
   @Override
-  public List<RateData> fetch() {
+  public List<RateData> getAll() {
     return Arrays.asList(
         Objects.requireNonNull(template.getForObject(BINANCE_API_URL, RateData[].class))
     );

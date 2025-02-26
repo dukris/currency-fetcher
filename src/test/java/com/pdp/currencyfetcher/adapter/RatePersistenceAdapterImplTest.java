@@ -1,4 +1,4 @@
-package com.pdp.currencyfetcher.usecase.impl;
+package com.pdp.currencyfetcher.adapter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -8,8 +8,7 @@ import static org.mockito.Mockito.when;
 
 import com.pdp.currencyfetcher.domain.Rate;
 import com.pdp.currencyfetcher.extensions.FakeRate;
-import com.pdp.currencyfetcher.repository.RateRepository;
-import com.pdp.currencyfetcher.usecase.GenerateVersionUseCase;
+import com.pdp.currencyfetcher.adapter.repository.RateRepository;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,14 +17,14 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class PostgresCurrencyHandlerTest {
+class RatePersistenceAdapterImplTest {
 
   @Mock
   private RateRepository repository;
   @Mock
-  private GenerateVersionUseCase generator;
+  private VersionPersistenceAdapter versionPersistenceAdapter;
   @InjectMocks
-  private PostgresCurrenciesHandler handler;
+  private RatePersistenceAdapterImpl adapter;
 
   @Test
   @ExtendWith(FakeRate.class)
@@ -35,14 +34,14 @@ class PostgresCurrencyHandlerTest {
     when(repository.saveAll(any())).thenReturn(expected);
 
     // when
-    List<Rate> actual = handler.save(expected);
+    List<Rate> actual = adapter.save(expected);
 
     // then
     assertNotNull(actual);
     assertEquals(expected.size(), actual.size());
     assertEquals(expected, actual);
     verify(repository).saveAll(any());
-    verify(generator).next();
+    verify(versionPersistenceAdapter).next();
   }
 
   @Test
@@ -53,7 +52,7 @@ class PostgresCurrencyHandlerTest {
     when(repository.findAll()).thenReturn(expected);
 
     // when
-    List<Rate> actual = handler.getAll();
+    List<Rate> actual = adapter.findAll();
 
     // then
     assertNotNull(actual);

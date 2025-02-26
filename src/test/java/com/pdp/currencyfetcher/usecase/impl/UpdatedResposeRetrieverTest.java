@@ -6,14 +6,14 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.pdp.currencyfetcher.adapter.RatePersistenceAdapter;
+import com.pdp.currencyfetcher.adapter.VersionPersistenceAdapter;
 import com.pdp.currencyfetcher.api.dto.PollingResponseDto;
 import com.pdp.currencyfetcher.api.dto.RateDto;
 import com.pdp.currencyfetcher.domain.Rate;
 import com.pdp.currencyfetcher.extensions.FakeRate;
 import com.pdp.currencyfetcher.extensions.FakeRateDto;
 import com.pdp.currencyfetcher.mapper.RateMapper;
-import com.pdp.currencyfetcher.usecase.GenerateVersionUseCase;
-import com.pdp.currencyfetcher.usecase.RetrieveCurrenciesUseCase;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,9 +30,9 @@ class UpdatedResposeRetrieverTest {
   private final Long currentVersion = 1L;
 
   @Mock
-  private RetrieveCurrenciesUseCase retriever;
+  private RatePersistenceAdapter ratePersistenceAdapter;
   @Mock
-  private GenerateVersionUseCase generator;
+  private VersionPersistenceAdapter versionPersistenceAdapter;
   @Mock
   private RateMapper mapper;
   @InjectMocks
@@ -49,9 +49,9 @@ class UpdatedResposeRetrieverTest {
             .rates(List.of(dto))
             .build()
     );
-    when(generator.current()).thenReturn(currentVersion);
-    when(generator.next()).thenReturn(nextVersion);
-    when(retriever.getAll()).thenReturn(List.of(rate));
+    when(versionPersistenceAdapter.current()).thenReturn(currentVersion);
+    when(versionPersistenceAdapter.next()).thenReturn(nextVersion);
+    when(ratePersistenceAdapter.findAll()).thenReturn(List.of(rate));
     when(mapper.toDto(List.of(rate))).thenReturn(List.of(dto));
 
     // when
@@ -60,9 +60,9 @@ class UpdatedResposeRetrieverTest {
     // then
     assertNotNull(actual);
     assertEquals(expected, actual);
-    verify(generator).current();
-    verify(generator).next();
-    verify(retriever).getAll();
+    verify(versionPersistenceAdapter).current();
+    verify(versionPersistenceAdapter).next();
+    verify(ratePersistenceAdapter).findAll();
   }
 
   @Test
@@ -76,9 +76,9 @@ class UpdatedResposeRetrieverTest {
             .rates(List.of(dto))
             .build()
     );
-    when(generator.current()).thenReturn(currentVersion, currentVersion + 1);
-    when(generator.next()).thenReturn(nextVersion);
-    when(retriever.getAll()).thenReturn(List.of(rate));
+    when(versionPersistenceAdapter.current()).thenReturn(currentVersion, currentVersion + 1);
+    when(versionPersistenceAdapter.next()).thenReturn(nextVersion);
+    when(ratePersistenceAdapter.findAll()).thenReturn(List.of(rate));
     when(mapper.toDto(List.of(rate))).thenReturn(List.of(dto));
 
     // when
@@ -87,9 +87,9 @@ class UpdatedResposeRetrieverTest {
     // then
     assertNotNull(actual);
     assertEquals(expected, actual);
-    verify(generator, times(2)).current();
-    verify(generator).next();
-    verify(retriever).getAll();
+    verify(versionPersistenceAdapter, times(2)).current();
+    verify(versionPersistenceAdapter).next();
+    verify(ratePersistenceAdapter).findAll();
   }
 
   @Test
@@ -97,7 +97,7 @@ class UpdatedResposeRetrieverTest {
     // given
     ResponseEntity expected = ResponseEntity.status(HttpStatus.NO_CONTENT)
         .body("No new rates available");
-    when(generator.current()).thenReturn(currentVersion);
+    when(versionPersistenceAdapter.current()).thenReturn(currentVersion);
 
     // when
     ResponseEntity actual = fetcher.fetch(currentVersion + 1, 1L);
@@ -105,7 +105,7 @@ class UpdatedResposeRetrieverTest {
     // then
     assertNotNull(actual);
     assertEquals(expected, actual);
-    verify(generator, times(3)).current();
+    verify(versionPersistenceAdapter, times(3)).current();
   }
 
 }

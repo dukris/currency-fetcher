@@ -1,4 +1,4 @@
-package com.pdp.currencyfetcher.usecase.impl;
+package com.pdp.currencyfetcher.adapter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -13,12 +13,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @ExtendWith(MockitoExtension.class)
-class UniqueVersionGeneratorTest {
+class VersionPersistenceAdapterImplTest {
 
   @Mock
   private JdbcTemplate template;
   @InjectMocks
-  private UniqueVersionGenerator generator;
+  private VersionPersistenceAdapterImpl adapter;
 
   @Test
   void shouldGenerateUniqueVersion() {
@@ -27,7 +27,7 @@ class UniqueVersionGeneratorTest {
     when(template.queryForObject("SELECT nextval('version_no_seq')", Long.class)).thenReturn(expected);
 
     // when
-    Long actual = generator.next();
+    Long actual = adapter.next();
 
     // then
     assertNotNull(actual);
@@ -42,7 +42,7 @@ class UniqueVersionGeneratorTest {
     when(template.queryForObject("SELECT currval('version_no_seq')", Long.class)).thenReturn(expected);
 
     // when
-    Long actual = generator.current();
+    Long actual = adapter.current();
 
     // then
     assertNotNull(actual);

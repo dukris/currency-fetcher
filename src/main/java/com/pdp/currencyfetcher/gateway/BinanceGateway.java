@@ -1,4 +1,4 @@
-package com.pdp.currencyfetcher.usecase;
+package com.pdp.currencyfetcher.gateway;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
@@ -7,14 +7,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-public interface FetchRatesUseCase {
+public interface BinanceGateway {
 
   /**
-   * Fetches currencies and rates using an appropriate API.
+   * Gets currencies and rates.
    *
    * @return List of currencies and rates
    */
-  List<RateData> fetch();
+  List<RateData> getAll();
 
   @Data
   @NoArgsConstructor

@@ -1,4 +1,4 @@
-package com.pdp.currencyfetcher.repository;
+package com.pdp.currencyfetcher.adapter.repository;
 
 import com.pdp.currencyfetcher.domain.Rate;
 import java.util.UUID;
