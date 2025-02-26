@@ -11,7 +11,7 @@ import com.pdp.currencyfetcher.gateway.BinanceGateway.RateData;
 import com.pdp.currencyfetcher.adapter.RatePersistenceAdapter;
 import com.pdp.currencyfetcher.domain.RateEntity;
 import com.pdp.currencyfetcher.extensions.FakeRate;
-import com.pdp.currencyfetcher.mapper.RateMapper;
+import com.pdp.currencyfetcher.domain.mapper.RateMapper;
 import java.math.BigDecimal;
 import java.util.List;
 import org.junit.jupiter.api.Test;

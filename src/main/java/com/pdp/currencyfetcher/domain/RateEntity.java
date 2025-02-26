@@ -18,7 +18,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "rates", schema = "currency-fetcher")
+@Table(name = "rates", schema = "fetcher")
 public class RateEntity {
 
     @Id

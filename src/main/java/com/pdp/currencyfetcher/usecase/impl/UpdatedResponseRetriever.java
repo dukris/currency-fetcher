@@ -3,7 +3,7 @@ package com.pdp.currencyfetcher.usecase.impl;
 import com.pdp.currencyfetcher.adapter.RatePersistenceAdapter;
 import com.pdp.currencyfetcher.adapter.VersionPersistenceAdapter;
 import com.pdp.currencyfetcher.api.dto.PollingResponseDto;
-import com.pdp.currencyfetcher.mapper.RateMapper;
+import com.pdp.currencyfetcher.domain.mapper.RateMapper;
 import com.pdp.currencyfetcher.usecase.PollUpdatedResponseUseCase;
 import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;

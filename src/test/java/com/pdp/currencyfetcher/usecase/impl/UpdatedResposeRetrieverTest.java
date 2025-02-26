@@ -13,7 +13,7 @@ import com.pdp.currencyfetcher.api.dto.RateDto;
 import com.pdp.currencyfetcher.domain.RateEntity;
 import com.pdp.currencyfetcher.extensions.FakeRate;
 import com.pdp.currencyfetcher.extensions.FakeRateDto;
-import com.pdp.currencyfetcher.mapper.RateMapper;
+import com.pdp.currencyfetcher.domain.mapper.RateMapper;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -3,7 +3,7 @@ server:
   shutdown: graceful
 spring:
   application:
-    name: currency-fetcher
+    name: fetcher
   config:
     import: optional:file:.env[.properties]
   jpa:
@@ -21,3 +21,15 @@ spring:
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
     url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/postgres
+  cloud:
+    openfeign:
+      client:
+        config:
+          binance:
+            url: ${BINANCE_URL}
+            connectTimeout: 5000
+            readTimeout: 5000
+            loggerLevel: full
+logging:
+  level:
+    com.pdp.currencyfetcher: ${LOG_LEVEL}
