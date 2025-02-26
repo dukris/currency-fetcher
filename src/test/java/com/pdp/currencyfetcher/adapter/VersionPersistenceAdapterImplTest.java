@@ -39,15 +39,15 @@ class VersionPersistenceAdapterImplTest {
   void shouldReturnCurrentVersion() {
     // given
     Long expected = 1L;
-    when(template.queryForObject("SELECT currval('version_no_seq')", Long.class)).thenReturn(expected);
+    when(template.queryForObject("SELECT last_value FROM version_no_seq", Long.class)).thenReturn(expected);
 
     // when
     Long actual = adapter.current();
 
     // then
     assertNotNull(actual);
-    assertEquals(expected, actual);
-    verify(template).queryForObject("SELECT currval('version_no_seq')", Long.class);
+    assertEquals(expected - 1, actual);
+    verify(template).queryForObject("SELECT last_value FROM version_no_seq", Long.class);
   }
 
 }

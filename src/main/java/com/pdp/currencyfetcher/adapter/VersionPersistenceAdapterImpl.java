@@ -17,7 +17,7 @@ public class VersionPersistenceAdapterImpl implements VersionPersistenceAdapter 
 
   @Override
   public Long current() {
-    return template.queryForObject("SELECT last_value FROM version_no_seq", Long.class);
+    return template.queryForObject("SELECT last_value FROM version_no_seq", Long.class) - 1;
   }
 
 }

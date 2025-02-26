@@ -1,6 +1,11 @@
 package com.pdp.currencyfetcher.api;
 
-import com.pdp.currencyfetcher.usecase.PollUpdatedResponseUseCase;
+import com.pdp.currencyfetcher.adapter.RatePersistenceAdapter;
+import com.pdp.currencyfetcher.adapter.VersionPersistenceAdapter;
+import com.pdp.currencyfetcher.api.dto.ErrorDto;
+import com.pdp.currencyfetcher.api.dto.PollingResponseDto;
+import com.pdp.currencyfetcher.domain.mapper.RateMapper;
+import com.pdp.currencyfetcher.exception.NoUpdatedContentException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Min;
@@ -23,8 +28,10 @@ import org.springframework.web.context.request.async.DeferredResult;
 @Tag(name = "Controller for rates")
 public class RateController {
 
-  private final PollUpdatedResponseUseCase fetcher;
+  private final VersionPersistenceAdapter versionPersistenceAdapter;
+  private final RatePersistenceAdapter ratePersistenceAdapter;
   private final ExecutorService executor;
+  private final RateMapper mapper;
 
   @GetMapping
   @Operation(summary = "Get all actual rates")
@@ -36,13 +43,18 @@ public class RateController {
     CompletableFuture.runAsync(() -> {
           try {
             result.setResult(
-                fetcher.fetch(version, timeout)
-            );
+                ResponseEntity.ok(
+                    PollingResponseDto.builder()
+                        .version(versionPersistenceAdapter.next())
+                        .rates(mapper.toDto(ratePersistenceAdapter.poll(version, timeout)))
+                        .build()));
+          } catch (NoUpdatedContentException ex) {
+            result.setResult(ResponseEntity.status(HttpStatus.NO_CONTENT).build());
           } catch (Exception ex) {
             log.error("Error while fetching rates", ex);
             result.setErrorResult(
                 ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Internal server error")
+                    .body(new ErrorDto("Error while fetching rates"))
             );
           }
         }, executor
