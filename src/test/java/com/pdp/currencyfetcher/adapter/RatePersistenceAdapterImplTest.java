@@ -11,7 +11,7 @@ import static org.mockito.Mockito.when;
 import com.pdp.currencyfetcher.adapter.repository.RateRepository;
 import com.pdp.currencyfetcher.domain.RateEntity;
 import com.pdp.currencyfetcher.exception.NoUpdatedContentException;
-import com.pdp.currencyfetcher.extensions.FakeRate;
+import com.pdp.currencyfetcher.extensions.FakeRateEntity;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,7 +33,7 @@ class RatePersistenceAdapterImplTest {
   private RatePersistenceAdapterImpl adapter;
 
   @Test
-  @ExtendWith(FakeRate.class)
+  @ExtendWith(FakeRateEntity.class)
   void shouldSaveCurrenciesAndRates(RateEntity rate) {
     // given
     List<RateEntity> expected = List.of(rate);
@@ -51,7 +51,7 @@ class RatePersistenceAdapterImplTest {
   }
 
   @Test
-  @ExtendWith(FakeRate.class)
+  @ExtendWith(FakeRateEntity.class)
   void shouldPollRatesIfProvidedVersionIsLower(RateEntity expected) {
     // given
     when(versionPersistenceAdapter.current()).thenReturn(currentVersion);
@@ -69,7 +69,7 @@ class RatePersistenceAdapterImplTest {
   }
 
   @Test
-  @ExtendWith(FakeRate.class)
+  @ExtendWith(FakeRateEntity.class)
   void shouldPollUpdatedRatesAfterTimeoutIfProvidedVersionIsHigher(RateEntity expected) {
     // given
     when(versionPersistenceAdapter.current()).thenReturn(currentVersion, currentVersion + 1);
