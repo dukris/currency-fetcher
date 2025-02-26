@@ -20,8 +20,8 @@ public class FetchingScheduler implements ScheduleFetchingUseCase {
   private final RatePersistenceAdapter ratePersistenceAdapter;
 
   @Override
-//  @Scheduled(cron = "0 * * * * *")
-  @Scheduled(fixedRate = 500000000)
+  @Scheduled(cron = "* * * * * *")
+  @SchedulerLock(name = "fetchRatesLock", lockAtLeastFor = "PT1S", lockAtMostFor = "PT5S")
   public void schedule() {
     ratePersistenceAdapter.save(mapper.toEntity(gateway.getAll()));
     log.debug("Fetching rates has been completed: {}", LocalDateTime.now());
