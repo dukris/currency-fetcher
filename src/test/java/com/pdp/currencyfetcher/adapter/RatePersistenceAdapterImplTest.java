@@ -6,7 +6,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.pdp.currencyfetcher.domain.Rate;
+import com.pdp.currencyfetcher.domain.RateEntity;
 import com.pdp.currencyfetcher.extensions.FakeRate;
 import com.pdp.currencyfetcher.adapter.repository.RateRepository;
 import java.util.List;
@@ -28,13 +28,13 @@ class RatePersistenceAdapterImplTest {
 
   @Test
   @ExtendWith(FakeRate.class)
-  void shouldSaveCurrenciesAndRates(Rate rate) {
+  void shouldSaveCurrenciesAndRates(RateEntity rate) {
     // given
-    List<Rate> expected = List.of(rate);
+    List<RateEntity> expected = List.of(rate);
     when(repository.saveAll(any())).thenReturn(expected);
 
     // when
-    List<Rate> actual = adapter.save(expected);
+    List<RateEntity> actual = adapter.save(expected);
 
     // then
     assertNotNull(actual);
@@ -46,13 +46,13 @@ class RatePersistenceAdapterImplTest {
 
   @Test
   @ExtendWith(FakeRate.class)
-  void shouldRetrieveAllCurrenciesAndRates(Rate rate) {
+  void shouldRetrieveAllCurrenciesAndRates(RateEntity rate) {
     // given
-    List<Rate> expected = List.of(rate);
+    List<RateEntity> expected = List.of(rate);
     when(repository.findAll()).thenReturn(expected);
 
     // when
-    List<Rate> actual = adapter.findAll();
+    List<RateEntity> actual = adapter.findAll();
 
     // then
     assertNotNull(actual);

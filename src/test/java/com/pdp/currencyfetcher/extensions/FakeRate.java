@@ -1,6 +1,6 @@
 package com.pdp.currencyfetcher.extensions;
 
-import com.pdp.currencyfetcher.domain.Rate;
+import com.pdp.currencyfetcher.domain.RateEntity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -14,13 +14,13 @@ public class FakeRate implements ParameterResolver {
   @Override
   public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
       throws ParameterResolutionException {
-    return Rate.class.isAssignableFrom(parameterContext.getParameter().getType());
+    return RateEntity.class.isAssignableFrom(parameterContext.getParameter().getType());
   }
 
   @Override
   public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
       throws ParameterResolutionException {
-    return new Rate(UUID.randomUUID(), "USDT", new BigDecimal(1), LocalDateTime.now());
+    return new RateEntity(UUID.randomUUID(), "USDT", new BigDecimal(1), LocalDateTime.now());
   }
 
 }

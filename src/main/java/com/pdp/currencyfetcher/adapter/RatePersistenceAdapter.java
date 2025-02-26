@@ -1,6 +1,6 @@
 package com.pdp.currencyfetcher.adapter;
 
-import com.pdp.currencyfetcher.domain.Rate;
+import com.pdp.currencyfetcher.domain.RateEntity;
 import java.util.List;
 
 public interface RatePersistenceAdapter {
@@ -10,7 +10,7 @@ public interface RatePersistenceAdapter {
    *
    * @return List of currencies and rates
    */
-  List<Rate> findAll();
+  List<RateEntity> findAll();
 
   /**
    * Stores provided currencies and rates.
@@ -18,6 +18,6 @@ public interface RatePersistenceAdapter {
    * @param rates List of currencies and rates
    * @return Saved rates
    */
-  List<Rate> save(List<Rate> rates);
+  List<RateEntity> save(List<RateEntity> rates);
 
 }

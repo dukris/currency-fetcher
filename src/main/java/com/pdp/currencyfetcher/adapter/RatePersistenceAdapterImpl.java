@@ -1,6 +1,6 @@
 package com.pdp.currencyfetcher.adapter;
 
-import com.pdp.currencyfetcher.domain.Rate;
+import com.pdp.currencyfetcher.domain.RateEntity;
 import com.pdp.currencyfetcher.adapter.repository.RateRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -15,14 +15,14 @@ public class RatePersistenceAdapterImpl implements RatePersistenceAdapter {
   private final VersionPersistenceAdapter versionPersistenceAdapter;
 
   @Override
-  public List<Rate> findAll() {
+  public List<RateEntity> findAll() {
     return repository.findAll();
   }
 
   @Override
   @Transactional
-  public List<Rate> save(List<Rate> rates) {
-    List<Rate> saved = repository.saveAll(rates);
+  public List<RateEntity> save(List<RateEntity> rates) {
+    List<RateEntity> saved = repository.saveAll(rates);
     versionPersistenceAdapter.next();
     return saved;
   }

@@ -10,7 +10,7 @@ import com.pdp.currencyfetcher.adapter.RatePersistenceAdapter;
 import com.pdp.currencyfetcher.adapter.VersionPersistenceAdapter;
 import com.pdp.currencyfetcher.api.dto.PollingResponseDto;
 import com.pdp.currencyfetcher.api.dto.RateDto;
-import com.pdp.currencyfetcher.domain.Rate;
+import com.pdp.currencyfetcher.domain.RateEntity;
 import com.pdp.currencyfetcher.extensions.FakeRate;
 import com.pdp.currencyfetcher.extensions.FakeRateDto;
 import com.pdp.currencyfetcher.mapper.RateMapper;
@@ -40,7 +40,7 @@ class UpdatedResposeRetrieverTest {
 
   @Test
   @ExtendWith({FakeRate.class, FakeRateDto.class})
-  void shouldFetchUpdatedRatesIfProvidedVersionIsLower(Rate rate, RateDto dto)
+  void shouldFetchUpdatedRatesIfProvidedVersionIsLower(RateEntity rate, RateDto dto)
       throws InterruptedException {
     // given
     ResponseEntity expected = ResponseEntity.ok(
@@ -67,7 +67,7 @@ class UpdatedResposeRetrieverTest {
 
   @Test
   @ExtendWith({FakeRate.class, FakeRateDto.class})
-  void shouldFetchUpdatedRatesAfterTimeoutIfProvidedVersionIsHigher(Rate rate, RateDto dto)
+  void shouldFetchUpdatedRatesAfterTimeoutIfProvidedVersionIsHigher(RateEntity rate, RateDto dto)
       throws InterruptedException {
     // given
     ResponseEntity expected = ResponseEntity.ok(

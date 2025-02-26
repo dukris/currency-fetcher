@@ -14,9 +14,9 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class FetchingScheduler implements ScheduleFetchingUseCase {
 
+  private final RateMapper mapper;
   private final BinanceGateway gateway;
   private final RatePersistenceAdapter ratePersistenceAdapter;
-  private final RateMapper mapper;
 
   @Override
   @Scheduled(cron = "0 * * * * *")
