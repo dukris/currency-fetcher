@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UpdatedResponseRetriever implements PollUpdatedResponseUseCase {
 
-  private final RatePersistenceAdapter ratePersistenceAdapter;
   private final VersionPersistenceAdapter versionPersistenceAdapter;
+  private final RatePersistenceAdapter ratePersistenceAdapter;
   private final RateMapper mapper;
 
   @Override

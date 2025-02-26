@@ -3,7 +3,8 @@ server:
   shutdown: graceful
 spring:
   application:
-    name: fetcher
+    name: Currency Fetcher
+    version: 0.0.1
   config:
     import: optional:file:.env[.properties]
   jpa:
