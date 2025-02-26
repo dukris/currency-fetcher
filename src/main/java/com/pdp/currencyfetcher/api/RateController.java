@@ -32,11 +32,7 @@ public class RateController {
       @RequestParam @Min(0) Long version,
       @RequestParam @Min(0) Long timeout
   ) {
-    DeferredResult<ResponseEntity> result = new DeferredResult<>(
-        timeout,
-        ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT)
-            .body("Request timeout")
-    );
+    DeferredResult<ResponseEntity> result = new DeferredResult<>();
     CompletableFuture.runAsync(() -> {
           try {
             result.setResult(
