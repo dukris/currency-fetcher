@@ -5,4 +5,6 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
     <include file="classpath:db/changelog/V1_init_model.xml"/>
     <include file="classpath:db/changelog/V2_add_index.xml"/>
+    <include file="classpath:db/changelog/V3_create_seq_generator.xml"/>
+    <include file="classpath:db/changelog/V4_init_shedlock.xml"/>
 </databaseChangeLog>

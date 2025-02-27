@@ -6,15 +6,14 @@ import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.pdp.currencyfetcher.domain.Rate;
-import com.pdp.currencyfetcher.usecase.FetchRatesUseCase;
-import com.pdp.currencyfetcher.usecase.FetchRatesUseCase.RateData;
-import com.pdp.currencyfetcher.usecase.FetchRatesUseCase.RateDataMapper;
-import com.pdp.currencyfetcher.usecase.SaveCurrencyUseCase;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import com.pdp.currencyfetcher.adapter.RatePersistenceAdapter;
+import com.pdp.currencyfetcher.domain.RateEntity;
+import com.pdp.currencyfetcher.domain.mapper.RateMapper;
+import com.pdp.currencyfetcher.extensions.FakeRateData;
+import com.pdp.currencyfetcher.extensions.FakeRateEntity;
+import com.pdp.currencyfetcher.gateway.BinanceGateway;
+import com.pdp.currencyfetcher.gateway.BinanceGateway.RateData;
 import java.util.List;
-import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -27,31 +26,31 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class FetchingSchedulerTest {
 
   @Mock
-  private FetchRatesUseCase fetcher;
+  private BinanceGateway binanceGateway;
   @Mock
-  private SaveCurrencyUseCase saver;
+  private RatePersistenceAdapter ratePersistenceAdapter;
   @Mock
-  private RateDataMapper mapper;
+  private RateMapper mapper;
   @Captor
-  private ArgumentCaptor<List<Rate>> captor;
+  private ArgumentCaptor<List<RateEntity>> captor;
   @InjectMocks
   private FetchingScheduler scheduler;
 
   @Test
-  void shouldFetchRates() {
+  @ExtendWith({FakeRateEntity.class, FakeRateData.class})
+  void shouldFetchRates(RateEntity expected, RateData rate) {
     // given
-    Rate expected = new Rate(UUID.randomUUID(), "USDT", new BigDecimal(1), LocalDateTime.now());
-    when(fetcher.fetch()).thenReturn(List.of(new RateData("USDT", new BigDecimal(1))));
+    when(binanceGateway.getAll()).thenReturn(List.of(rate));
     when(mapper.toEntity(anyList())).thenReturn(List.of(expected));
 
     // when
     scheduler.schedule();
 
     // then
-    verify(fetcher).fetch();
-    verify(saver).save(captor.capture());
+    verify(binanceGateway).getAll();
+    verify(ratePersistenceAdapter).save(captor.capture());
 
-    List<Rate> rates = captor.getValue();
+    List<RateEntity> rates = captor.getValue();
     assertNotNull(rates);
     assertEquals(1, rates.size());
     assertEquals(expected, rates.get(0));

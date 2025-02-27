@@ -6,13 +6,13 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.8.xsd">
 
   <changeSet id="0" author="Hanna">
-    <preConditions onFail="MARK_RAN">
-      <not>
-        <indexExists indexName="idx_crypto_rate_timestamp" tableName="rates"/>
-      </not>
-    </preConditions>
-    <createIndex indexName="idx_crypto_rate_date" tableName="rates">
-      <column name="date"/>
-    </createIndex>
+    <createTable tableName="shedlock" schemaName="fetcher">
+      <column name="name" type="VARCHAR(64)">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="lock_until" type="TIMESTAMP"/>
+      <column name="locked_at" type="TIMESTAMP" defaultValueComputed="now()"/>
+      <column name="locked_by" type="VARCHAR(255)"/>
+    </createTable>
   </changeSet>
 </databaseChangeLog>

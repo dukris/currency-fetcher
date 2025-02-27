@@ -1,26 +1,31 @@
 package com.pdp.currencyfetcher.usecase.impl;
 
-import com.pdp.currencyfetcher.usecase.FetchRatesUseCase;
-import com.pdp.currencyfetcher.usecase.FetchRatesUseCase.RateData;
-import com.pdp.currencyfetcher.usecase.SaveCurrencyUseCase;
+import com.pdp.currencyfetcher.adapter.RatePersistenceAdapter;
+import com.pdp.currencyfetcher.domain.mapper.RateMapper;
+import com.pdp.currencyfetcher.gateway.BinanceGateway;
 import com.pdp.currencyfetcher.usecase.ScheduleFetchingUseCase;
-import java.util.List;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class FetchingScheduler implements ScheduleFetchingUseCase {
 
-  private final FetchRatesUseCase fetcher;
-  private final SaveCurrencyUseCase saver;
-  private final FetchRatesUseCase.RateDataMapper mapper;
+  private final RateMapper mapper;
+  private final BinanceGateway gateway;
+  private final RatePersistenceAdapter ratePersistenceAdapter;
 
   @Override
-  @Scheduled(fixedDelay = 1000000000)
+  @Scheduled(cron = "* * * * * *")
+  @SchedulerLock(name = "fetchRatesLock")
   public void schedule() {
-    List<RateData> rates = fetcher.fetch();
-    saver.save(mapper.toEntity(rates));
+    ratePersistenceAdapter.save(mapper.toEntity(gateway.getAll()));
+    log.debug("Fetching rates has been completed: {}", LocalDateTime.now());
   }
+
 }
