@@ -7,6 +7,7 @@ import com.pdp.currencyfetcher.usecase.ScheduleFetchingUseCase;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +22,7 @@ public class FetchingScheduler implements ScheduleFetchingUseCase {
 
   @Override
   @Scheduled(cron = "* * * * * *")
-  @SchedulerLock(name = "fetchRatesLock", lockAtLeastFor = "PT1S", lockAtMostFor = "PT5S")
+  @SchedulerLock(name = "fetchRatesLock")
   public void schedule() {
     ratePersistenceAdapter.save(mapper.toEntity(gateway.getAll()));
     log.debug("Fetching rates has been completed: {}", LocalDateTime.now());
