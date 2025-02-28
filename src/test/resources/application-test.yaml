@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    username: test
+    password: test
+  liquibase:
+    user: test
+    password: test
+  cloud:
+    openfeign:
+      client:
+        config:
+          binance:
+            url: host
+            connectTimeout: 5000
+            readTimeout: 5000
+            loggerLevel: full
+  task:
+    scheduling:
+      enabled: false
+logging:
+  level:
+    com.pdp.currencyfetcher: DEBUG
