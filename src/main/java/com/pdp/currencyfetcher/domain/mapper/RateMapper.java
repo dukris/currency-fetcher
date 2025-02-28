@@ -1,7 +1,7 @@
 package com.pdp.currencyfetcher.domain.mapper;
 
 import com.pdp.currencyfetcher.api.dto.RateDto;
-import com.pdp.currencyfetcher.domain.RateEntity;
+import com.pdp.currencyfetcher.domain.Rate;
 import com.pdp.currencyfetcher.gateway.BinanceGateway.RateData;
 import java.util.List;
 import org.mapstruct.Mapper;
@@ -12,10 +12,10 @@ public interface RateMapper {
 
   @Mapping(target = "currency", source = "symbol")
   @Mapping(target = "rate", source = "price")
-  RateEntity toEntity(RateData data);
+  Rate toEntity(RateData data);
 
-  List<RateEntity> toEntity(List<RateData> data);
+  List<Rate> toEntity(List<RateData> data);
 
-  List<RateDto> toDto(List<RateEntity> data);
+  List<RateDto> toDto(List<Rate> data);
 
 }

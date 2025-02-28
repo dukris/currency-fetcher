@@ -1,7 +1,7 @@
 package com.pdp.currencyfetcher.adapter;
 
 import com.pdp.currencyfetcher.adapter.repository.RateRepository;
-import com.pdp.currencyfetcher.domain.RateEntity;
+import com.pdp.currencyfetcher.domain.Rate;
 import com.pdp.currencyfetcher.exception.NoUpdatedContentException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -19,7 +19,7 @@ public class RatePersistenceAdapterImpl implements RatePersistenceAdapter {
 
   @Override
   @SneakyThrows
-  public List<RateEntity> poll(Long version, Long timeout) {
+  public List<Rate> poll(Long version, Long timeout) {
     if (version < versionPersistenceAdapter.current()) {
       return repository.findAll();
     } else {
@@ -36,8 +36,8 @@ public class RatePersistenceAdapterImpl implements RatePersistenceAdapter {
 
   @Override
   @Transactional
-  public List<RateEntity> save(List<RateEntity> rates) {
-    List<RateEntity> saved = repository.saveAll(rates);
+  public List<Rate> save(List<Rate> rates) {
+    List<Rate> saved = repository.saveAll(rates);
     versionPersistenceAdapter.next();
     return saved;
   }
