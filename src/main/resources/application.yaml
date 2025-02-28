@@ -34,3 +34,11 @@ spring:
 logging:
   level:
     com.pdp.currencyfetcher: ${LOG_LEVEL}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, prometheus
+  endpoint:
+    health:
+      show-details: always
