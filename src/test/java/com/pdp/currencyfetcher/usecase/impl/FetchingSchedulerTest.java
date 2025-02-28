@@ -7,7 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.pdp.currencyfetcher.adapter.RatePersistenceAdapter;
-import com.pdp.currencyfetcher.domain.RateEntity;
+import com.pdp.currencyfetcher.domain.Rate;
 import com.pdp.currencyfetcher.domain.mapper.RateMapper;
 import com.pdp.currencyfetcher.extensions.FakeRateData;
 import com.pdp.currencyfetcher.extensions.FakeRateEntity;
@@ -32,13 +32,13 @@ class FetchingSchedulerTest {
   @Mock
   private RateMapper mapper;
   @Captor
-  private ArgumentCaptor<List<RateEntity>> captor;
+  private ArgumentCaptor<List<Rate>> captor;
   @InjectMocks
   private FetchingScheduler scheduler;
 
   @Test
   @ExtendWith({FakeRateEntity.class, FakeRateData.class})
-  void shouldFetchRates(RateEntity expected, RateData rate) {
+  void shouldFetchRates(Rate expected, RateData rate) {
     // given
     when(binanceGateway.getAll()).thenReturn(List.of(rate));
     when(mapper.toEntity(anyList())).thenReturn(List.of(expected));
@@ -50,7 +50,7 @@ class FetchingSchedulerTest {
     verify(binanceGateway).getAll();
     verify(ratePersistenceAdapter).save(captor.capture());
 
-    List<RateEntity> rates = captor.getValue();
+    List<Rate> rates = captor.getValue();
     assertNotNull(rates);
     assertEquals(1, rates.size());
     assertEquals(expected, rates.get(0));
