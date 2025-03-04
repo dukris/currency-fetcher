@@ -35,7 +35,7 @@ public class RateController {
 
   @GetMapping
   @Operation(summary = "Get all actual rates")
-  public DeferredResult<ResponseEntity> getRates(
+  public DeferredResult<ResponseEntity> getAll(
       @RequestParam @Min(0) Long version,
       @RequestParam @Min(0) Long timeout
   ) {

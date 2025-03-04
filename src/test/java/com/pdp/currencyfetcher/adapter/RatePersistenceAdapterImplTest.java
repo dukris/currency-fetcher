@@ -3,7 +3,6 @@ package com.pdp.currencyfetcher.adapter;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -34,19 +33,14 @@ class RatePersistenceAdapterImplTest {
 
   @Test
   @ExtendWith(FakeRate.class)
-  void shouldSaveCurrenciesAndRates(Rate rate) {
+  void shouldSaveOrUpdateCurrenciesAndRates(Rate expected) {
     // given
-    List<Rate> expected = List.of(rate);
-    when(repository.saveAll(any())).thenReturn(expected);
 
     // when
-    List<Rate> actual = adapter.save(expected);
+    adapter.upsert(List.of(expected));
 
     // then
-    assertNotNull(actual);
-    assertEquals(expected.size(), actual.size());
-    assertEquals(expected, actual);
-    verify(repository).saveAll(any());
+    verify(repository).upsert(expected.getCurrency(), expected.getRate());
     verify(versionPersistenceAdapter).next();
   }
 

@@ -16,7 +16,7 @@
         <constraints primaryKey="true" nullable="false"/>
       </column>
       <column name="currency" type="VARCHAR(20)">
-        <constraints nullable="false"/>
+        <constraints nullable="false" unique="true"/>
       </column>
       <column name="rate" type="DECIMAL(20,10)">
         <constraints nullable="false"/>

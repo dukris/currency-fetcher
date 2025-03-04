@@ -3,6 +3,7 @@ package com.pdp.currencyfetcher.adapter;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import com.pdp.currencyfetcher.adapter.repository.RateRepository;
 import com.pdp.currencyfetcher.domain.Rate;
 import integration.IntegrationTest;
 import integration.PostgresIntegration;
@@ -16,17 +17,20 @@ class RatePersistenceAdapterIT extends IntegrationTest implements PostgresIntegr
 
   @Autowired
   private RatePersistenceAdapter adapter;
+  @Autowired
+  private RateRepository repository;
 
   @Test
   @Sql("classpath:sql/init-sequence.sql")
-  void shouldSaveRate() {
+  void shouldSaveOrUpdateRates() {
     // given
     Rate expected = new Rate();
     expected.setCurrency("USDT");
     expected.setRate(new BigDecimal("1.0000000000"));
 
     // when
-    List<Rate> actual = adapter.save(List.of(expected));
+    adapter.upsert(List.of(expected));
+    List<Rate> actual = repository.findAll();
 
     // then
     assertNotNull(actual);
