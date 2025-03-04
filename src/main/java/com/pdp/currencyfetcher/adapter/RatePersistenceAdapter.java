@@ -13,11 +13,10 @@ public interface RatePersistenceAdapter {
   List<Rate> poll(Long version, Long timeout);
 
   /**
-   * Stores provided currencies and rates.
+   * Insert or update provided currencies and rates.
    *
    * @param rates List of currencies and rates
-   * @return Saved rates
    */
-  List<Rate> save(List<Rate> rates);
+  void upsert(List<Rate> rates);
 
 }

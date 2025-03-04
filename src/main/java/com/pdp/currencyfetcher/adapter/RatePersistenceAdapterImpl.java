@@ -19,6 +19,7 @@ public class RatePersistenceAdapterImpl implements RatePersistenceAdapter {
 
   @Override
   @SneakyThrows
+  @Transactional(readOnly = true)
   public List<Rate> poll(Long version, Long timeout) {
     if (version < versionPersistenceAdapter.current()) {
       return repository.findAll();
@@ -36,10 +37,9 @@ public class RatePersistenceAdapterImpl implements RatePersistenceAdapter {
 
   @Override
   @Transactional
-  public List<Rate> save(List<Rate> rates) {
-    List<Rate> saved = repository.saveAll(rates);
+  public void upsert(List<Rate> rates) {
+    rates.forEach(rate -> repository.upsert(rate.getCurrency(), rate.getRate()));
     versionPersistenceAdapter.next();
-    return saved;
   }
 
 }
