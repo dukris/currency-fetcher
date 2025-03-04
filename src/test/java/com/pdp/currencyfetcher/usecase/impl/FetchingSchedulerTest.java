@@ -10,7 +10,7 @@ import com.pdp.currencyfetcher.adapter.RatePersistenceAdapter;
 import com.pdp.currencyfetcher.domain.Rate;
 import com.pdp.currencyfetcher.domain.mapper.RateMapper;
 import com.pdp.currencyfetcher.extensions.FakeRateData;
-import com.pdp.currencyfetcher.extensions.FakeRateEntity;
+import com.pdp.currencyfetcher.extensions.FakeRate;
 import com.pdp.currencyfetcher.gateway.BinanceGateway;
 import com.pdp.currencyfetcher.gateway.BinanceGateway.RateData;
 import java.util.List;
@@ -37,7 +37,7 @@ class FetchingSchedulerTest {
   private FetchingScheduler scheduler;
 
   @Test
-  @ExtendWith({FakeRateEntity.class, FakeRateData.class})
+  @ExtendWith({FakeRate.class, FakeRateData.class})
   void shouldFetchRates(Rate expected, RateData rate) {
     // given
     when(binanceGateway.getAll()).thenReturn(List.of(rate));
