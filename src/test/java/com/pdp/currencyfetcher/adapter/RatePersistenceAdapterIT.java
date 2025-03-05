@@ -57,4 +57,22 @@ class RatePersistenceAdapterIT extends IntegrationTest implements PostgresIntegr
     assertEquals(expected.getRate(), actual.get(0).getRate());
   }
 
+  @Test
+  @Sql(scripts = {"classpath:sql/init-sequence.sql", "classpath:sql/insert-rate.sql"})
+  void shouldReturnAllRates() {
+    // given
+    Rate expected = new Rate();
+    expected.setCurrency("USDT");
+    expected.setRate(new BigDecimal("1.0000000000"));
+
+    // when
+    List<Rate> actual = adapter.findAll();
+
+    // then
+    assertNotNull(actual);
+    assertEquals(1, actual.size());
+    assertEquals(expected.getCurrency(), actual.get(0).getCurrency());
+    assertEquals(expected.getRate(), actual.get(0).getRate());
+  }
+
 }

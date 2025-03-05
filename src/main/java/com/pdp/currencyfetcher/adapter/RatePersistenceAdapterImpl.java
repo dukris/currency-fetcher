@@ -18,6 +18,12 @@ public class RatePersistenceAdapterImpl implements RatePersistenceAdapter {
   private final VersionPersistenceAdapter versionPersistenceAdapter;
 
   @Override
+  @Transactional(readOnly = true)
+  public List<Rate> findAll() {
+    return repository.findAll();
+  }
+
+  @Override
   @SneakyThrows
   @Transactional(readOnly = true)
   public List<Rate> poll(Long version, Long timeout) {

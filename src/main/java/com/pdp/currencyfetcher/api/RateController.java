@@ -4,11 +4,13 @@ import com.pdp.currencyfetcher.adapter.RatePersistenceAdapter;
 import com.pdp.currencyfetcher.adapter.VersionPersistenceAdapter;
 import com.pdp.currencyfetcher.api.dto.ErrorDto;
 import com.pdp.currencyfetcher.api.dto.PollingResponseDto;
+import com.pdp.currencyfetcher.api.dto.RateDto;
 import com.pdp.currencyfetcher.domain.mapper.RateMapper;
 import com.pdp.currencyfetcher.exception.NoUpdatedContentException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Min;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import lombok.RequiredArgsConstructor;
@@ -34,8 +36,14 @@ public class RateController {
   private final RateMapper mapper;
 
   @GetMapping
-  @Operation(summary = "Get all actual rates")
-  public DeferredResult<ResponseEntity> getAll(
+  @Operation(summary = "Get all actual rates immediately")
+  public List<RateDto> getAll() {
+    return mapper.toDto(ratePersistenceAdapter.findAll());
+  }
+
+  @GetMapping("/poll")
+  @Operation(summary = "Poll all actual rates according to the version")
+  public DeferredResult<ResponseEntity> poll(
       @RequestParam @Min(0) Long version,
       @RequestParam @Min(0) Long timeout
   ) {

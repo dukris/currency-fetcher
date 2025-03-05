@@ -6,6 +6,13 @@ import java.util.List;
 public interface RatePersistenceAdapter {
 
   /**
+   * Find all currencies and rates from the database.
+   *
+   * @return List of currencies and rates
+   */
+  List<Rate> findAll();
+
+  /**
    * Poll currencies and rates from the database.
    *
    * @return List of currencies and rates

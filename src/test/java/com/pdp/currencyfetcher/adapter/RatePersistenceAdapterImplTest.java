@@ -46,6 +46,22 @@ class RatePersistenceAdapterImplTest {
 
   @Test
   @ExtendWith(FakeRate.class)
+  void shouldReturnAllRates(Rate expected) {
+    // given
+    when(repository.findAll()).thenReturn(List.of(expected));
+
+    // when
+    List<Rate> actual = adapter.findAll();
+
+    // then
+    assertNotNull(actual);
+    assertEquals(1, actual.size());
+    assertEquals(expected, actual.get(0));
+    verify(repository).findAll();
+  }
+
+  @Test
+  @ExtendWith(FakeRate.class)
   void shouldPollRatesIfProvidedVersionIsLower(Rate expected) {
     // given
     when(versionPersistenceAdapter.current()).thenReturn(currentVersion);
