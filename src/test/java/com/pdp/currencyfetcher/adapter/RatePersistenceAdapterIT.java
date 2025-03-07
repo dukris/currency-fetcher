@@ -26,7 +26,7 @@ class RatePersistenceAdapterIT extends IntegrationTest implements PostgresIntegr
     // given
     Rate expected = new Rate();
     expected.setCurrency("USDT");
-    expected.setRate(new BigDecimal("1.0000000000"));
+    expected.setValue(new BigDecimal("1.0000000000"));
 
     // when
     adapter.upsert(List.of(expected));
@@ -36,7 +36,7 @@ class RatePersistenceAdapterIT extends IntegrationTest implements PostgresIntegr
     assertNotNull(actual);
     assertEquals(1, actual.size());
     assertEquals(expected.getCurrency(), actual.get(0).getCurrency());
-    assertEquals(expected.getRate(), actual.get(0).getRate());
+    assertEquals(expected.getValue(), actual.get(0).getValue());
   }
 
   @Test
@@ -45,7 +45,7 @@ class RatePersistenceAdapterIT extends IntegrationTest implements PostgresIntegr
     // given
     Rate expected = new Rate();
     expected.setCurrency("USDT");
-    expected.setRate(new BigDecimal("1.0000000000"));
+    expected.setValue(new BigDecimal("1.0000000000"));
 
     // when
     List<Rate> actual = adapter.poll(0L, 0L);
@@ -54,7 +54,7 @@ class RatePersistenceAdapterIT extends IntegrationTest implements PostgresIntegr
     assertNotNull(actual);
     assertEquals(1, actual.size());
     assertEquals(expected.getCurrency(), actual.get(0).getCurrency());
-    assertEquals(expected.getRate(), actual.get(0).getRate());
+    assertEquals(expected.getValue(), actual.get(0).getValue());
   }
 
   @Test
@@ -63,7 +63,7 @@ class RatePersistenceAdapterIT extends IntegrationTest implements PostgresIntegr
     // given
     Rate expected = new Rate();
     expected.setCurrency("USDT");
-    expected.setRate(new BigDecimal("1.0000000000"));
+    expected.setValue(new BigDecimal("1.0000000000"));
 
     // when
     List<Rate> actual = adapter.findAll();
@@ -72,7 +72,7 @@ class RatePersistenceAdapterIT extends IntegrationTest implements PostgresIntegr
     assertNotNull(actual);
     assertEquals(1, actual.size());
     assertEquals(expected.getCurrency(), actual.get(0).getCurrency());
-    assertEquals(expected.getRate(), actual.get(0).getRate());
+    assertEquals(expected.getValue(), actual.get(0).getValue());
   }
 
 }

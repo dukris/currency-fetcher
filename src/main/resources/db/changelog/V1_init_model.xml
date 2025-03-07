@@ -18,7 +18,7 @@
       <column name="currency" type="VARCHAR(20)">
         <constraints nullable="false" unique="true"/>
       </column>
-      <column name="rate" type="DECIMAL(20,10)">
+      <column name="value" type="DECIMAL(20,10)">
         <constraints nullable="false"/>
       </column>
       <column name="date" type="TIMESTAMP">

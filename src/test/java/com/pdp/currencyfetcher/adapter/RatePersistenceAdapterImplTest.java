@@ -40,7 +40,7 @@ class RatePersistenceAdapterImplTest {
     adapter.upsert(List.of(expected));
 
     // then
-    verify(repository).upsert(expected.getCurrency(), expected.getRate());
+    verify(repository).upsert(expected.getCurrency(), expected.getValue());
     verify(versionPersistenceAdapter).next();
   }
 
