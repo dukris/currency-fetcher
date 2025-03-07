@@ -11,7 +11,7 @@ import org.mapstruct.Mapping;
 public interface RateMapper {
 
   @Mapping(target = "currency", source = "symbol")
-  @Mapping(target = "rate", source = "price")
+  @Mapping(target = "value", source = "price")
   Rate toEntity(RateData data);
 
   List<Rate> toEntity(List<RateData> data);
