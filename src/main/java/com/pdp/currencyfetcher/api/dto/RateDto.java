@@ -19,6 +19,6 @@ public class RateDto {
     private String currency;
 
     @Schema(name = "Rate of the currency")
-    private BigDecimal rate;
+    private BigDecimal value;
 
 }
