@@ -44,7 +44,7 @@ public class RatePersistenceAdapterImpl implements RatePersistenceAdapter {
   @Override
   @Transactional
   public void upsert(List<Rate> rates) {
-    rates.forEach(rate -> repository.upsert(rate.getCurrency(), rate.getRate()));
+    rates.forEach(rate -> repository.upsert(rate.getCurrency(), rate.getValue()));
     versionPersistenceAdapter.next();
   }
 

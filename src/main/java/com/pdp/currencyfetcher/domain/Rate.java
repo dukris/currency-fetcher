@@ -29,7 +29,7 @@ public class Rate {
     private String currency;
 
     @Column(nullable = false)
-    private BigDecimal rate;
+    private BigDecimal value;
 
     @UpdateTimestamp
     private LocalDateTime date;
