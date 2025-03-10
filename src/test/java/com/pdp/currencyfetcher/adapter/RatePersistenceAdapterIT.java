@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.pdp.currencyfetcher.adapter.repository.RateRepository;
-import com.pdp.currencyfetcher.domain.Rate;
+import com.pdp.currencyfetcher.domain.RateEntity;
 import integration.IntegrationTest;
 import integration.PostgresIntegration;
 import java.math.BigDecimal;
@@ -24,13 +24,13 @@ class RatePersistenceAdapterIT extends IntegrationTest implements PostgresIntegr
   @Sql("classpath:sql/init-sequence.sql")
   void shouldSaveOrUpdateRates() {
     // given
-    Rate expected = new Rate();
+    RateEntity expected = new RateEntity();
     expected.setCurrency("USDT");
     expected.setValue(new BigDecimal("1.0000000000"));
 
     // when
     adapter.upsert(List.of(expected));
-    List<Rate> actual = repository.findAll();
+    List<RateEntity> actual = repository.findAll();
 
     // then
     assertNotNull(actual);
@@ -43,12 +43,12 @@ class RatePersistenceAdapterIT extends IntegrationTest implements PostgresIntegr
   @Sql(scripts = {"classpath:sql/init-sequence.sql", "classpath:sql/insert-rate.sql"})
   void shouldPollActualRates() {
     // given
-    Rate expected = new Rate();
+    RateEntity expected = new RateEntity();
     expected.setCurrency("USDT");
     expected.setValue(new BigDecimal("1.0000000000"));
 
     // when
-    List<Rate> actual = adapter.poll(0L, 0L);
+    List<RateEntity> actual = adapter.poll(0L, 0L);
 
     // then
     assertNotNull(actual);
@@ -61,12 +61,12 @@ class RatePersistenceAdapterIT extends IntegrationTest implements PostgresIntegr
   @Sql(scripts = {"classpath:sql/init-sequence.sql", "classpath:sql/insert-rate.sql"})
   void shouldReturnAllRates() {
     // given
-    Rate expected = new Rate();
+    RateEntity expected = new RateEntity();
     expected.setCurrency("USDT");
     expected.setValue(new BigDecimal("1.0000000000"));
 
     // when
-    List<Rate> actual = adapter.findAll();
+    List<RateEntity> actual = adapter.findAll();
 
     // then
     assertNotNull(actual);

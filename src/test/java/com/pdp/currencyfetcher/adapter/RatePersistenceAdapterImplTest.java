@@ -8,7 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.pdp.currencyfetcher.adapter.repository.RateRepository;
-import com.pdp.currencyfetcher.domain.Rate;
+import com.pdp.currencyfetcher.domain.RateEntity;
 import com.pdp.currencyfetcher.exception.NoUpdatedContentException;
 import com.pdp.currencyfetcher.extensions.FakeRate;
 import java.util.List;
@@ -33,7 +33,7 @@ class RatePersistenceAdapterImplTest {
 
   @Test
   @ExtendWith(FakeRate.class)
-  void shouldSaveOrUpdateCurrenciesAndRates(Rate expected) {
+  void shouldSaveOrUpdateCurrenciesAndRates(RateEntity expected) {
     // given
 
     // when
@@ -46,12 +46,12 @@ class RatePersistenceAdapterImplTest {
 
   @Test
   @ExtendWith(FakeRate.class)
-  void shouldReturnAllRates(Rate expected) {
+  void shouldReturnAllRates(RateEntity expected) {
     // given
     when(repository.findAll()).thenReturn(List.of(expected));
 
     // when
-    List<Rate> actual = adapter.findAll();
+    List<RateEntity> actual = adapter.findAll();
 
     // then
     assertNotNull(actual);
@@ -62,13 +62,13 @@ class RatePersistenceAdapterImplTest {
 
   @Test
   @ExtendWith(FakeRate.class)
-  void shouldPollRatesIfProvidedVersionIsLower(Rate expected) {
+  void shouldPollRatesIfProvidedVersionIsLower(RateEntity expected) {
     // given
     when(versionPersistenceAdapter.current()).thenReturn(currentVersion);
     when(repository.findAll()).thenReturn(List.of(expected));
 
     // when
-    List<Rate> actual = adapter.poll(currentVersion - 1, 1L);
+    List<RateEntity> actual = adapter.poll(currentVersion - 1, 1L);
 
     // then
     assertNotNull(actual);
@@ -80,13 +80,13 @@ class RatePersistenceAdapterImplTest {
 
   @Test
   @ExtendWith(FakeRate.class)
-  void shouldPollUpdatedRatesAfterTimeoutIfProvidedVersionIsHigher(Rate expected) {
+  void shouldPollUpdatedRatesAfterTimeoutIfProvidedVersionIsHigher(RateEntity expected) {
     // given
     when(versionPersistenceAdapter.current()).thenReturn(currentVersion, currentVersion + 1);
     when(repository.findAll()).thenReturn(List.of(expected));
 
     // when
-    List<Rate> actual = adapter.poll(currentVersion, 5L);
+    List<RateEntity> actual = adapter.poll(currentVersion, 5L);
 
     // then
     assertNotNull(actual);
