@@ -12,11 +12,11 @@ public interface RateRepository extends JpaRepository<Rate, UUID> {
 
   @Modifying
   @Query(value = """
-          INSERT INTO fetcher.rates (id, currency, rate, date)
-          VALUES (gen_random_uuid(), :currency, :rate, CURRENT_TIMESTAMP)
+          INSERT INTO fetcher.rates (id, currency, value, date)
+          VALUES (gen_random_uuid(), :currency, :value, CURRENT_TIMESTAMP)
           ON CONFLICT (currency)
-          DO UPDATE SET rate = EXCLUDED.rate, date = CURRENT_TIMESTAMP
+          DO UPDATE SET value = EXCLUDED.value, date = CURRENT_TIMESTAMP
       """, nativeQuery = true)
-  void upsert(@Param("currency") String currency, @Param("rate") BigDecimal rate);
+  void upsert(@Param("currency") String currency, @Param("value") BigDecimal value);
 
 }
