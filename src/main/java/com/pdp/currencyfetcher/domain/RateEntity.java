@@ -19,7 +19,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "rates", schema = "fetcher")
-public class Rate {
+public class RateEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

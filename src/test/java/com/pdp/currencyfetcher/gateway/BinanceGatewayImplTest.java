@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
-import com.pdp.currencyfetcher.extensions.FakeRateData;
-import com.pdp.currencyfetcher.gateway.BinanceGateway.RateData;
+import com.pdp.currencyfetcher.api.dto.BinanceRateDto;
+import com.pdp.currencyfetcher.extensions.FakeBinanceRateDto;
 import com.pdp.currencyfetcher.gateway.client.BinanceClient;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -23,13 +23,13 @@ class BinanceGatewayImplTest {
   private BinanceGatewayImpl gateway;
 
   @Test
-  @ExtendWith(FakeRateData.class)
-  void shouldGetAllRates(RateData expected) {
+  @ExtendWith(FakeBinanceRateDto.class)
+  void shouldGetAllRates(BinanceRateDto expected) {
     // given
     when(client.getAll()).thenReturn(List.of(expected));
 
     // when
-    List<RateData> actual = gateway.getAll();
+    List<BinanceRateDto> actual = gateway.getAll();
 
     // then
     assertNotNull(actual);

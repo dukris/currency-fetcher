@@ -1,6 +1,6 @@
 package com.pdp.currencyfetcher.adapter.repository;
 
-import com.pdp.currencyfetcher.domain.Rate;
+import com.pdp.currencyfetcher.domain.RateEntity;
 import java.math.BigDecimal;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface RateRepository extends JpaRepository<Rate, UUID> {
+public interface RateRepository extends JpaRepository<RateEntity, UUID> {
 
   @Modifying
   @Query(value = """

@@ -7,12 +7,12 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.pdp.currencyfetcher.adapter.RatePersistenceAdapter;
-import com.pdp.currencyfetcher.domain.Rate;
+import com.pdp.currencyfetcher.api.dto.BinanceRateDto;
+import com.pdp.currencyfetcher.domain.RateEntity;
 import com.pdp.currencyfetcher.domain.mapper.RateMapper;
-import com.pdp.currencyfetcher.extensions.FakeRateData;
+import com.pdp.currencyfetcher.extensions.FakeBinanceRateDto;
 import com.pdp.currencyfetcher.extensions.FakeRate;
 import com.pdp.currencyfetcher.gateway.BinanceGateway;
-import com.pdp.currencyfetcher.gateway.BinanceGateway.RateData;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,13 +32,13 @@ class FetchingSchedulerTest {
   @Mock
   private RateMapper mapper;
   @Captor
-  private ArgumentCaptor<List<Rate>> captor;
+  private ArgumentCaptor<List<RateEntity>> captor;
   @InjectMocks
   private FetchingScheduler scheduler;
 
   @Test
-  @ExtendWith({FakeRate.class, FakeRateData.class})
-  void shouldFetchRates(Rate expected, RateData rate) {
+  @ExtendWith({FakeRate.class, FakeBinanceRateDto.class})
+  void shouldFetchRates(RateEntity expected, BinanceRateDto rate) {
     // given
     when(binanceGateway.getAll()).thenReturn(List.of(rate));
     when(mapper.toEntity(anyList())).thenReturn(List.of(expected));
@@ -50,7 +50,7 @@ class FetchingSchedulerTest {
     verify(binanceGateway).getAll();
     verify(ratePersistenceAdapter).upsert(captor.capture());
 
-    List<Rate> rates = captor.getValue();
+    List<RateEntity> rates = captor.getValue();
     assertNotNull(rates);
     assertEquals(1, rates.size());
     assertEquals(expected, rates.get(0));
