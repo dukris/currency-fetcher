@@ -1,6 +1,7 @@
-package com.pdp.currencyfetcher.gateway;
+package com.pdp.currencyfetcher.gateway.impl;
 
 import com.pdp.currencyfetcher.api.dto.BinanceRateDto;
+import com.pdp.currencyfetcher.gateway.BinanceGateway;
 import com.pdp.currencyfetcher.gateway.client.BinanceClient;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

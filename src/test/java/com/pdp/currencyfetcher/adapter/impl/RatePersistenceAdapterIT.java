@@ -1,8 +1,9 @@
-package com.pdp.currencyfetcher.adapter;
+package com.pdp.currencyfetcher.adapter.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import com.pdp.currencyfetcher.adapter.RatePersistenceAdapter;
 import com.pdp.currencyfetcher.adapter.repository.RateRepository;
 import com.pdp.currencyfetcher.domain.RateEntity;
 import integration.IntegrationTest;

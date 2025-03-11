@@ -1,4 +1,4 @@
-package com.pdp.currencyfetcher.gateway;
+package com.pdp.currencyfetcher.gateway.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

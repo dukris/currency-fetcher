@@ -10,8 +10,8 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface RateMapper {
 
-  @Mapping(target = "currency", source = "symbol")
   @Mapping(target = "value", source = "price")
+  @Mapping(target = "currency", source = "symbol")
   RateEntity toEntity(BinanceRateDto data);
 
   List<RateEntity> toEntity(List<BinanceRateDto> data);

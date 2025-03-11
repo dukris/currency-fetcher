@@ -1,4 +1,4 @@
-package com.pdp.currencyfetcher.adapter;
+package com.pdp.currencyfetcher.adapter.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -7,6 +7,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.pdp.currencyfetcher.adapter.VersionPersistenceAdapter;
 import com.pdp.currencyfetcher.adapter.repository.RateRepository;
 import com.pdp.currencyfetcher.domain.RateEntity;
 import com.pdp.currencyfetcher.exception.NoUpdatedContentException;
