@@ -1,5 +1,6 @@
-package com.pdp.currencyfetcher.adapter;
+package com.pdp.currencyfetcher.adapter.impl;
 
+import com.pdp.currencyfetcher.adapter.VersionPersistenceAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;

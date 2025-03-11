@@ -1,7 +1,8 @@
-package com.pdp.currencyfetcher.adapter;
+package com.pdp.currencyfetcher.adapter.impl;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import com.pdp.currencyfetcher.adapter.VersionPersistenceAdapter;
 import integration.IntegrationTest;
 import integration.PostgresIntegration;
 import org.junit.jupiter.api.Test;

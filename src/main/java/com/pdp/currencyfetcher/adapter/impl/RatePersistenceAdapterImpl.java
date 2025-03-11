@@ -1,5 +1,7 @@
-package com.pdp.currencyfetcher.adapter;
+package com.pdp.currencyfetcher.adapter.impl;
 
+import com.pdp.currencyfetcher.adapter.RatePersistenceAdapter;
+import com.pdp.currencyfetcher.adapter.VersionPersistenceAdapter;
 import com.pdp.currencyfetcher.adapter.repository.RateRepository;
 import com.pdp.currencyfetcher.domain.RateEntity;
 import com.pdp.currencyfetcher.exception.NoUpdatedContentException;
