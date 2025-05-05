@@ -1,18 +1,20 @@
 package com.pdp.currencyfetcher.adapter.impl;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import com.pdp.currencyfetcher.adapter.RatePersistenceAdapter;
 import com.pdp.currencyfetcher.adapter.repository.RateRepository;
+import com.pdp.currencyfetcher.domain.Rate;
 import com.pdp.currencyfetcher.domain.RateEntity;
 import integration.IntegrationTest;
 import integration.PostgresIntegration;
-import java.math.BigDecimal;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class RatePersistenceAdapterIT extends IntegrationTest implements PostgresIntegration {
 
@@ -25,7 +27,7 @@ class RatePersistenceAdapterIT extends IntegrationTest implements PostgresIntegr
   @Sql("classpath:sql/init-sequence.sql")
   void shouldSaveOrUpdateRates() {
     // given
-    RateEntity expected = new RateEntity();
+    Rate expected = new Rate();
     expected.setCurrency("USDT");
     expected.setValue(new BigDecimal("1.0000000000"));
 
@@ -44,12 +46,12 @@ class RatePersistenceAdapterIT extends IntegrationTest implements PostgresIntegr
   @Sql(scripts = {"classpath:sql/init-sequence.sql", "classpath:sql/insert-rate.sql"})
   void shouldPollActualRates() {
     // given
-    RateEntity expected = new RateEntity();
+    Rate expected = new Rate();
     expected.setCurrency("USDT");
     expected.setValue(new BigDecimal("1.0000000000"));
 
     // when
-    List<RateEntity> actual = adapter.poll(0L, 0L);
+    List<Rate> actual = adapter.poll(0L, 0L);
 
     // then
     assertNotNull(actual);
@@ -62,12 +64,12 @@ class RatePersistenceAdapterIT extends IntegrationTest implements PostgresIntegr
   @Sql(scripts = {"classpath:sql/init-sequence.sql", "classpath:sql/insert-rate.sql"})
   void shouldReturnAllRates() {
     // given
-    RateEntity expected = new RateEntity();
+    Rate expected = new Rate();
     expected.setCurrency("USDT");
     expected.setValue(new BigDecimal("1.0000000000"));
 
     // when
-    List<RateEntity> actual = adapter.findAll();
+    List<Rate> actual = adapter.getAll();
 
     // then
     assertNotNull(actual);
