@@ -2,20 +2,27 @@ package com.pdp.currencyfetcher.domain.mapper;
 
 import com.pdp.currencyfetcher.api.dto.BinanceRateDto;
 import com.pdp.currencyfetcher.api.dto.RateDto;
+import com.pdp.currencyfetcher.domain.Rate;
 import com.pdp.currencyfetcher.domain.RateEntity;
-import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface RateMapper {
 
-  @Mapping(target = "value", source = "price")
-  @Mapping(target = "currency", source = "symbol")
-  RateEntity toEntity(BinanceRateDto data);
+    @Mapping(target = "value", source = "price")
+    @Mapping(target = "currency", source = "symbol")
+    Rate toModel(BinanceRateDto data);
 
-  List<RateEntity> toEntity(List<BinanceRateDto> data);
+    List<Rate> toModels(List<BinanceRateDto> dtos);
 
-  List<RateDto> toDto(List<RateEntity> data);
+    List<RateDto> toDto(List<Rate> models);
+
+    List<RateEntity> toEntity(List<Rate> models);
+
+    List<Rate> toModel(List<RateEntity> entities);
+
 
 }

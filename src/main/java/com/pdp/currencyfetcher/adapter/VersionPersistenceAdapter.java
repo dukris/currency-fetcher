@@ -3,14 +3,14 @@ package com.pdp.currencyfetcher.adapter;
 public interface VersionPersistenceAdapter {
 
   /**
-   * Retrieves the next version.
+   * Retrieve the next version.
    *
    * @return the latest version
    */
   Long next();
 
   /**
-   * Retrieves current version.
+   * Retrieve current version.
    *
    * @return the latest version
    */
