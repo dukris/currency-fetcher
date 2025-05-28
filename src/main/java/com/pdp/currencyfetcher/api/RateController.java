@@ -10,6 +10,10 @@ import com.pdp.currencyfetcher.exception.NoUpdatedContentException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Min;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,10 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
-
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
 
 @Slf4j
 @RestController
@@ -40,6 +40,16 @@ public class RateController {
   @Operation(summary = "Get all actual rates immediately")
   public List<RateDto> retrieveAll() {
     return mapper.toDto(ratePersistenceAdapter.getAll());
+  }
+
+  @GetMapping("/currencies")
+  @Operation(summary = "Get rates by currency immediately")
+  public List<RateDto> retrieveByPeriod(
+      @RequestParam String currency,
+      @RequestParam LocalDateTime from,
+      @RequestParam LocalDateTime to
+  ) {
+    return mapper.toDto(ratePersistenceAdapter.getByPeriod(currency, from, to));
   }
 
   @GetMapping("/poll")

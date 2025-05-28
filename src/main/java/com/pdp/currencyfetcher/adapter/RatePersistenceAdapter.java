@@ -1,8 +1,7 @@
 package com.pdp.currencyfetcher.adapter;
 
 import com.pdp.currencyfetcher.domain.Rate;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface RatePersistenceAdapter {
@@ -19,7 +18,7 @@ public interface RatePersistenceAdapter {
      *
      * @return List of currencies and rates
      */
-    List<Rate> getByPeriod(String currency, LocalDate from, LocalDate to);
+    List<Rate> getByPeriod(String currency, LocalDateTime from, LocalDateTime to);
 
     /**
      * Poll currencies and rates from the database.
@@ -33,6 +32,6 @@ public interface RatePersistenceAdapter {
      *
      * @param rates List of currencies and rates
      */
-    void upsert(List<Rate> rates);
+    void save(List<Rate> rates);
 
 }
