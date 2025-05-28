@@ -61,4 +61,11 @@ public class RatePersistenceAdapterImpl implements RatePersistenceAdapter {
     versionPersistenceAdapter.next();
   }
 
+  @Override
+  @Transactional
+  public void deleteByDateBefore(LocalDateTime date) {
+    repository.deleteAllByDateBefore(date);
+    versionPersistenceAdapter.next();
+  }
+
 }

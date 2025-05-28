@@ -128,6 +128,19 @@ class RatePersistenceAdapterImplTest {
   }
 
   @Test
+  void shouldDeleteOutdatedRates() {
+    // given
+    LocalDateTime now = LocalDateTime.now();
+
+    // when
+    adapter.deleteByDateBefore(now);
+
+    // then
+    verify(versionPersistenceAdapter).next();
+    verify(repository).deleteAllByDateBefore(now);
+  }
+
+  @Test
   void shouldThrowNoContentExceptionIfProvidedVersionIsHigher() {
     // given
     when(versionPersistenceAdapter.current()).thenReturn(currentVersion);

@@ -10,4 +10,6 @@ public interface RateRepository extends JpaRepository<RateEntity, UUID> {
 
   List<RateEntity> findByCurrencyAndDateBetween(String currency, LocalDateTime from, LocalDateTime to);
 
+  void deleteAllByDateBefore(LocalDateTime date);
+
 }
