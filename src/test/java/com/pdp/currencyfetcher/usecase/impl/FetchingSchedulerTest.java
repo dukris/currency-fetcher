@@ -49,7 +49,7 @@ class FetchingSchedulerTest {
 
         // then
         verify(binanceGateway).getAll();
-        verify(ratePersistenceAdapter).upsert(captor.capture());
+        verify(ratePersistenceAdapter).save(captor.capture());
 
         List<Rate> rates = captor.getValue();
         assertNotNull(rates);

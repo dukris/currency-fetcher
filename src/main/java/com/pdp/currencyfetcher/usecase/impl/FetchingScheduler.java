@@ -25,7 +25,7 @@ public class FetchingScheduler implements ScheduleFetchingUseCase {
     @Scheduled(cron = "* * * * * *")
     @SchedulerLock(name = "fetchRatesLock")
     public void schedule() {
-        ratePersistenceAdapter.upsert(mapper.toModels(gateway.getAll()));
+        ratePersistenceAdapter.save(mapper.toModels(gateway.getAll()));
         log.info("Fetching rates has been completed: {}", LocalDateTime.now());
     }
 
