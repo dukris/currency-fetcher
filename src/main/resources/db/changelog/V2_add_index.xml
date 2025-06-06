@@ -8,7 +8,7 @@
   <changeSet id="0" author="Hanna">
     <preConditions onFail="MARK_RAN">
       <not>
-        <indexExists indexName="idx_crypto_rate_timestamp" tableName="rates"/>
+        <indexExists indexName="idx_crypto_rate_date" tableName="rates"/>
       </not>
     </preConditions>
     <createIndex indexName="idx_crypto_rate_date" tableName="rates">

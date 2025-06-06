@@ -25,7 +25,7 @@ public class RateEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false, length = 20, unique = true)
+    @Column(nullable = false, length = 20)
     private String currency;
 
     @Column(nullable = false)
