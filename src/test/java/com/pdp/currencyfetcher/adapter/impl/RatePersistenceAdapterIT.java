@@ -33,11 +33,11 @@ class RatePersistenceAdapterIT extends IntegrationTest implements PostgresIntegr
 
     // when
     adapter.save(List.of(expected));
-    List<RateEntity> actual = repository.findAll();
+    List<RateEntity> actual = repository.findLatestRates();
 
     // then
     assertNotNull(actual);
-    assertEquals(2, actual.size());
+    assertEquals(1, actual.size());
     assertEquals(expected.getCurrency(), actual.get(0).getCurrency());
     assertEquals(expected.getValue(), actual.get(0).getValue());
   }

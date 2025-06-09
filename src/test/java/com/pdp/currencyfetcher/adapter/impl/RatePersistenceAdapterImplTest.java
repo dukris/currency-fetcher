@@ -94,7 +94,7 @@ class RatePersistenceAdapterImplTest {
   void shouldPollRatesIfProvidedVersionIsLower(RateEntity entity, Rate expected) {
     // given
     when(versionPersistenceAdapter.current()).thenReturn(currentVersion);
-    when(repository.findAll()).thenReturn(List.of(entity));
+    when(repository.findLatestRates()).thenReturn(List.of(entity));
     when(mapper.toModel(List.of(entity))).thenReturn(List.of(expected));
 
     // when
@@ -105,7 +105,7 @@ class RatePersistenceAdapterImplTest {
     assertEquals(1, actual.size());
     assertEquals(expected, actual.get(0));
     verify(versionPersistenceAdapter).current();
-    verify(repository).findAll();
+    verify(repository).findLatestRates();
   }
 
   @Test
@@ -114,7 +114,7 @@ class RatePersistenceAdapterImplTest {
     // given
     when(versionPersistenceAdapter.current()).thenReturn(currentVersion, currentVersion + 1);
     when(mapper.toModel(List.of(entity))).thenReturn(List.of(expected));
-    when(repository.findAll()).thenReturn(List.of(entity));
+    when(repository.findLatestRates()).thenReturn(List.of(entity));
 
     // when
     List<Rate> actual = adapter.poll(currentVersion, 5L);
@@ -124,7 +124,7 @@ class RatePersistenceAdapterImplTest {
     assertEquals(1, actual.size());
     assertEquals(expected, actual.get(0));
     verify(versionPersistenceAdapter, times(2)).current();
-    verify(repository).findAll();
+    verify(repository).findLatestRates();
   }
 
   @Test

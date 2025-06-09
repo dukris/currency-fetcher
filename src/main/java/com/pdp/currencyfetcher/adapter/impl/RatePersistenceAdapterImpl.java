@@ -41,13 +41,13 @@ public class RatePersistenceAdapterImpl implements RatePersistenceAdapter {
   @Transactional(readOnly = true)
   public List<Rate> poll(Long version, Long timeout) {
     if (version < versionPersistenceAdapter.current()) {
-      return mapper.toModel(repository.findAll());
+      return mapper.toModel(repository.findLatestRates());
     } else {
       long start = System.currentTimeMillis();
       while (System.currentTimeMillis() - start < timeout * 1000) {
         TimeUnit.MILLISECONDS.sleep(500);
         if (version < versionPersistenceAdapter.current()) {
-          return mapper.toModel(repository.findAll());
+          return mapper.toModel(repository.findLatestRates());
         }
       }
     }
