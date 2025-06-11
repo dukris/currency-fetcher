@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -20,7 +21,7 @@ public class FetchingScheduler implements ScheduleFetchingUseCase {
     private final RatePersistenceAdapter ratePersistenceAdapter;
 
     @Override
-//    @Scheduled(cron = "* * * * * *")
+    @Scheduled(cron = "* * * * * *")
     @SchedulerLock(name = "fetchRatesLock")
     public void schedule() {
         ratePersistenceAdapter.save(mapper.toModels(gateway.getAll()));
